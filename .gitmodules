@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/sistema-de-ingressos/API-Sistema-de-Ingressos.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/sistema-de-ingressos/Front-End-Sistema-de-Ingressos.git

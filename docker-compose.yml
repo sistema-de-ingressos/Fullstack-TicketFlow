@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: frontend/
+      dockerfile: Dockerfile-frontend
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:8080
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: backend/
+      dockerfile: Dockerfile-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATASOURCE_URL: jdbc:mysql://mysql:3306/ticketflow_db?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+      DATASOURCE_USERNAME: root
+      DATASOURCE_PASSWORD: 123456789
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ticketflow_db
+      MYSQL_ROOT_PASSWORD: 123456789
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
